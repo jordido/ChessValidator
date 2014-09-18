@@ -65,7 +65,18 @@ class P < Piece
 	def initialize (color)
 	end
 	def move (origin,destiny,board)  # a2 -> a3 
+		row_origin = origin[0]
+		col_origin = origon[0]
 		
+		if board.color(origin) == "-" 
+			puts "Error color empty origin"
+		elsif board.color(origin) == "w"
+
+				
+
+
+
+
 
 
 
