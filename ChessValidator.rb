@@ -29,10 +29,8 @@ class Board
 
 
 	def movement (origin, destiny)  # coordenades en format original a1, b1, etc
-		new_origin = []
 		new_destiny = []
-		new_origin [1] = @col_convers[origin[0]].to_i
-		new_origin [0] = origin[1].to_i - 1
+
 		new_destiny [1] = @col_convers[destiny[0]].to_i
 		new_destiny [0] = destiny[1].to_i - 1
 
@@ -44,6 +42,14 @@ class Board
 		else
 			puts "ILEGAL"
 		end
+	end
+
+	private
+	def coordinates_to_array(coordenades)
+		[
+			@col_convers[origin[0]].to_i,
+			origin[1].to_i - 1
+		]
 	end
 end
 
