@@ -5,7 +5,7 @@ class Board
 		@board = []
 		File.open(file) do |f|
   			f.lines.each do |line|
-    		@board << line.split(" ").map(&:to_s)
+    		@board << line.split(" ").map{|x| x.to_s}
     		end
     	end
     	@board.reverse!
