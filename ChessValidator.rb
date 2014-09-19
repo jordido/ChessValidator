@@ -34,7 +34,7 @@ class Board
 
 		piece = piece_type(new_origin)
 		if piece != "-"
-			puts Object.const_get(piece).new.move(new_origin, new_destiny, self)
+			puts PieceFactory.for_type(piece).move(new_origin, new_destiny, self)
 		else
 			puts "ILEGAL"
 		end
@@ -49,7 +49,11 @@ class Board
 	end
 end
 
-
+class PieceFactory
+	def self.for_type(type)
+		Object.const_get(type).new
+	end
+end
 
 
 class Piece
