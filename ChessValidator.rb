@@ -16,14 +16,11 @@ class Board
 	def content (coordenades)
 		row = coordenades[0]
 		column = coordenades[1]
-		return @board[row][column]
+		@board[row][column]
 	end
 
 	def color (coordenades)
-		row = coordenades[0]
-		column = coordenades[1]
-		return @board[row][column][0]
-
+		content(coordenades)[0]
 	end
 
 	def piece_type (coordenades)  # coordenades en format array numèric
