@@ -24,9 +24,7 @@ class Board
 	end
 
 	def piece_type (coordenades)  # coordenades en format array numèric
-		row = coordenades[0]
-		column = coordenades[1]
-		return @board[row][column][1]
+		content(coordenades)[1]
 	end
 
 
