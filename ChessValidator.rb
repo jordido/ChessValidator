@@ -29,10 +29,8 @@ class Board
 
 
 	def movement (origin, destiny)  # coordenades en format original a1, b1, etc
-		new_destiny = []
-
-		new_destiny [1] = @col_convers[destiny[0]].to_i
-		new_destiny [0] = destiny[1].to_i - 1
+		new_origin = coordinates_to_array(origin)
+		new_destiny = coordinates_to_array(destiny)
 
 		piece = piece_type(new_origin)
 		print piece + " "
