@@ -33,8 +33,6 @@ class Board
 		new_destiny = coordinates_to_array(destiny)
 
 		piece = piece_type(new_origin)
-		print piece + " "
-		print origin + " " + new_origin.inspect + " -> " + destiny + " " + new_destiny.inspect + ": "
 		if piece != "-"
 			puts Object.const_get(piece).new.move(new_origin, new_destiny, self)
 		else
@@ -56,8 +54,6 @@ end
 
 class Piece
 	def initialize
-		@row = 0
-		@column = 0
 	end
 	def freeway (origin,destiny,board)
 		row_origin = origin[0]
@@ -73,10 +69,6 @@ class Piece
 			end
 		end
 		return true
-	end
-	def row
-	end
-	def column
 	end
 end
 
