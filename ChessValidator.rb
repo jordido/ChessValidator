@@ -4,13 +4,13 @@ class Board
 	def initialize(file)
 		@board = []
 		File.open(file) do |f|
-  			f.lines.each do |line|
-    		@board << line.split(" ").map{|x| x.to_s}
-    		end
-    	end
-    	@board.reverse!
-    	@col_convers = {"a" => 0, "b" =>1, "c" => 2, "d" => 3, "e" => 4, "f" => 5, "g" => 6, "h" => 7}
-  	end
+			f.each_line do |line|
+				@board << line.split(" ").map{|x| x.to_s}
+			end
+		end
+		@board.reverse!
+		@col_convers = {"a" => 0, "b" =>1, "c" => 2, "d" => 3, "e" => 4, "f" => 5, "g" => 6, "h" => 7}
+	end
 
 
 	def content (coordenades)
@@ -124,7 +124,7 @@ class R < Piece
 	def initialize
 	end
 	def move (origin,destiny,board)  # a2 -> a3
-	puts "R"
+		puts "R"
 	end
 end
 
@@ -133,7 +133,7 @@ class N < Piece
 	end
 
 	def move (origin,destiny,board)  # a2 -> a3
-	puts "N"
+		puts "N"
 	end
 end
 
@@ -142,7 +142,7 @@ class B < Piece
 	end
 
 	def move (origin,destiny,board)  # a2 -> a3
-	puts "B"
+		puts "B"
 	end
 end
 
@@ -150,7 +150,7 @@ class Q < Piece
 	def initialize
 	end
 	def move (origin,destiny,board)  # a2 -> a3
-	puts "Q"
+		puts "Q"
 	end
 end
 
@@ -158,7 +158,7 @@ class K	< Piece
 	def initialize
 	end
 	def move (origin,destiny,board)  # a2 -> a3
-	puts "K"
+		puts "K"
 	end
 end
 
