@@ -18,7 +18,7 @@ describe 'Board' do
   		expect(P.new.move([1,4],[3,4], @board)).to eq ("LEGAL")
   	end
 
-    it "move a Pawn from f2 to f4, occupied square" do
+    it "move a Pawn from f2 to f3, occupied square" do
       expect(P.new.move([1,5],[2,5], @board)).to eq ("ILEGAL")
     end
 
@@ -45,6 +45,9 @@ describe 'Board' do
     end
     it "move a Pawn from a2 to a3, one step and free square" do
       expect(@board.movement("a2","a3")).to eq ("LEGAL")
+    end
+    it "move a Pawn from a2 to b4, invalid crossing" do
+      expect(@board.movement("a2","b4")).to eq ("ILEGAL")
     end
   end
 

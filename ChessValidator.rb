@@ -94,10 +94,6 @@ class P < Piece
 	end
 	def move (origin,destiny,board)  # a2 -> a3, coordinates in numeric format
 #		puts freeway(origin,destiny,board)
-		row_origin = origin[0]
-		col_origin = origin[1]
-		row_destiny = destiny[0]
-		col_destiny = destiny[1]
 		if board.color(origin) == "-"
 			puts "Error color empty origin"
 		else
@@ -108,11 +104,6 @@ class P < Piece
 			end
 			return "ILEGAL" if (board.check_step_forward(origin, destiny, color_factor) == false)
 			return "ILEGAL" if (board.check_if_empty(destiny) == false)
-			
-			if (row_destiny - row_origin > 1) && (row_origin != 1)
-				return "ILEGAL"
-			end
-
 			return "LEGAL"
 		end
 		
