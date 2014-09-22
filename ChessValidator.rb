@@ -1,50 +1,63 @@
 require 'pry'
 
 class Board
+
 	def initialize(file)
-		@board = []
+		@board_array = []
 		File.open(file) do |f|
 			f.each_line do |line|
-				@board << line.split(" ").map{|x| x.to_s}
+				@board_array << line.split(" ").map{|x| x.to_s}
 			end
 		end
-		@board.reverse!
+		@board_array.reverse!
 		@col_convers = {"a" => 0, "b" =>1, "c" => 2, "d" => 3, "e" => 4, "f" => 5, "g" => 6, "h" => 7}
 	end
 
 
-	def content (coordenades)
-		row = coordenades[0]
-		column = coordenades[1]
-		@board[row][column]
+	def content (coordinates)
+		row = coordinates[0]
+		column = coordinates[1]
+		@board_array[row][column]
 	end
 
-	def color (coordenades)
-		content(coordenades)[0]
+	def color (coordinates)
+		content(coordinates)[0]
 	end
 
-	def piece_type (coordenades)  # coordenades en format array numèric
-		content(coordenades)[1]
+	def piece_type (coordinates)  # coordinates in numeric array format
+		content(coordinates)[1]
 	end
 
 
-	def movement (origin, destiny)  # coordenades en format original a1, b1, etc
-		new_origin = coordinates_to_array(origin)
-		new_destiny = coordinates_to_array(destiny)
+	def check_step_forward (origin, destiny, color_factor) 
+		return false if (origin[0] - destiny[0]) * color_factor > 2 || origin[1] != destiny[1]
+		return false if color_factor == 1 && (origin[0] != 1) && ((origin[0] - destiny[0])*color_factor > 1) 
+		return false if (color_factor == -1) && (origin[0] != 6) && ((origin[0] - destiny[0]) > 1) 
+		return true
+	end
+
+	def check_if_empty (destiny) 
+		return false if self.content(destiny) != "--"
+		return true
+	end
+
+	def movement (origin_str, destiny_str)  # coordinates in original format a1, b1, etc
+		new_origin = coordinates_to_array(origin_str)
+		new_destiny = coordinates_to_array(destiny_str)
 
 		piece = piece_type(new_origin)
+		print piece + " " +	origin_str + " " + new_origin.inspect + " -> " + destiny_str + " " + new_destiny.inspect + ": "
 		if piece != "-"
-			puts PieceFactory.for_type(piece).move(new_origin, new_destiny, self)
+			return PieceFactory.for_type(piece).move(new_origin, new_destiny, self)
 		else
-			puts "ILEGAL"
+			return "ILEGAL"
 		end
 	end
 
-	private
-	def coordinates_to_array(coordenades)
+	def coordinates_to_array(coordinates)
 		[
-			@col_convers[origin[0]].to_i,
-			origin[1].to_i - 1
+			coordinates[1].to_i - 1,
+			@col_convers[coordinates[0]].to_i	
 		]
 	end
 end
@@ -79,39 +92,32 @@ end
 class P < Piece
 	def initialize
 	end
-	def move (origin,destiny,board)  # a2 -> a3
+	def move (origin,destiny,board)  # a2 -> a3, coordinates in numeric format
+#		puts freeway(origin,destiny,board)
 		row_origin = origin[0]
 		col_origin = origin[1]
 		row_destiny = destiny[0]
 		col_destiny = destiny[1]
-		puts freeway(origin,destiny,board)
 		if board.color(origin) == "-"
 			puts "Error color empty origin"
-		elsif board.color(origin) == "w"
-			return "ILEGAL" if row_destiny - row_origin > 2
-			return "ILEGAL" if col_destiny != col_origin
-			return "ILEGAL" if board.content(destiny) != "--"
+		else
+			if board.color(origin) == "w"
+				color_factor = 1
+			else 
+				color_factor = -1
+			end
+			return "ILEGAL" if (board.check_step_forward(origin, destiny, color_factor) == false)
+			return "ILEGAL" if (board.check_if_empty(destiny) == false)
+			
 			if (row_destiny - row_origin > 1) && (row_origin != 1)
 				return "ILEGAL"
 			end
-			if board.content(destiny) != "--"
-				return "ILEGAL"
-			end
-			return "LEGAL"
 
-		elsif board.color(origin) == "b"
-			return "ILEGAL" if row_origin - row_destiny > 2
-			return "ILEGAL" if col_destiny != col_origin
-			return "ILEGAL" if board.content(destiny) != "--"
-			if (row_origin - row_destiny > 1) && (row_origin != 6)
-				return "ILEGAL"
-			end
-			if board.content(destiny) != "--"
-				return "ILEGAL"
-			end
 			return "LEGAL"
 		end
+		
 	end
+
 end
 
 
