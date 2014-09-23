@@ -28,14 +28,6 @@ class Board
 		content(coordinates)[1]
 	end
 
-
-	def check_step_forward (origin, destiny, color_factor) 
-		return false if (origin[0] - destiny[0]) * color_factor > 2 || origin[1] != destiny[1]
-		return false if color_factor == 1 && (origin[0] != 1) && ((origin[0] - destiny[0])*color_factor > 1) 
-		return false if (color_factor == -1) && (origin[0] != 6) && ((origin[0] - destiny[0]) > 1) 
-		return true
-	end
-
 	def check_if_empty (destiny) 
 		return false if self.content(destiny) != "--"
 		return true
@@ -48,7 +40,7 @@ class Board
 		piece = piece_type(new_origin)
 		print piece + " " +	origin_str + " " + new_origin.inspect + " -> " + destiny_str + " " + new_destiny.inspect + ": "
 		if piece != "-"
-			return PieceFactory.for_type(piece).move(new_origin, new_destiny, self)
+			return PieceFactory.for_type(piece).check_move(new_origin, new_destiny, self)
 		else
 			return "ILEGAL"
 		end
@@ -92,30 +84,37 @@ end
 class P < Piece
 	def initialize
 	end
-	def move (origin,destiny,board)  # a2 -> a3, coordinates in numeric format
+	def check_move (origin,destiny,board)  # a2 -> a3, coordinates in numeric format
 #		puts freeway(origin,destiny,board)
 		if board.color(origin) == "-"
 			puts "Error color empty origin"
+			return "ILEGAL"
 		else
 			if board.color(origin) == "w"
 				color_factor = 1
 			else 
 				color_factor = -1
 			end
-			return "ILEGAL" if (board.check_step_forward(origin, destiny, color_factor) == false)
-			return "ILEGAL" if (board.check_if_empty(destiny) == false)
+			return "ILEGAL" if check_step_forward(origin, destiny, color_factor) == false
+			return "ILEGAL" if board.check_if_empty(destiny) == false
 			return "LEGAL"
 		end
 		
 	end
+	
+	def check_step_forward (origin, destiny, color_factor) 
+		return false if (origin[0] - destiny[0]) * color_factor > 2 || origin[1] != destiny[1]
+		return false if (color_factor == 1) && (origin[0] != 1) && ((origin[0] - destiny[0])*color_factor > 1) 
+		return false if (color_factor == -1) && (origin[0] != 6) && ((origin[0] - destiny[0]) > 1) 
+		return true
+	end
 
 end
-
 
 class R < Piece
 	def initialize
 	end
-	def move (origin,destiny,board)  # a2 -> a3
+	def check_move (origin,destiny,board)  # a2 -> a3
 		puts "R"
 	end
 end
@@ -124,7 +123,7 @@ class N < Piece
 	def initialize
 	end
 
-	def move (origin,destiny,board)  # a2 -> a3
+	def check_move (origin,destiny,board)  # a2 -> a3
 		puts "N"
 	end
 end
@@ -133,7 +132,7 @@ class B < Piece
 	def initialize
 	end
 
-	def move (origin,destiny,board)  # a2 -> a3
+	def check_move (origin,destiny,board)  # a2 -> a3
 		puts "B"
 	end
 end
@@ -141,7 +140,7 @@ end
 class Q < Piece
 	def initialize
 	end
-	def move (origin,destiny,board)  # a2 -> a3
+	def check_move (origin,destiny,board)  # a2 -> a3
 		puts "Q"
 	end
 end
@@ -149,8 +148,7 @@ end
 class K	< Piece
 	def initialize
 	end
-	def move (origin,destiny,board)  # a2 -> a3
+	def check_move (origin,destiny,board)  # a2 -> a3
 		puts "K"
 	end
 end
-

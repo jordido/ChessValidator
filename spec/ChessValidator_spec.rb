@@ -13,17 +13,17 @@ describe 'Board' do
 
   end
 
-  describe "move con parámetros numéricos" do 
-  	it "move a Pawn from e2 to e4, free square" do
-  		expect(P.new.move([1,4],[3,4], @board)).to eq ("LEGAL")
+  describe "chek_move con parámetros numéricos" do 
+  	it "check_move a Pawn from e2 to e4, free square" do
+  		expect(P.new.check_move([1,4],[3,4], @board)).to eq ("LEGAL")
   	end
 
-    it "move a Pawn from f2 to f3, occupied square" do
-      expect(P.new.move([1,5],[2,5], @board)).to eq ("ILEGAL")
+    it "chek_move a Pawn from f2 to f3, occupied square" do
+      expect(P.new.check_move([1,5],[2,5], @board)).to eq ("ILEGAL")
     end
 
-    it "move a Pawn from e2 to f4, incorrect crossed movement" do
-      expect(P.new.move([1,4],[2,5], @board)).to eq ("ILEGAL")
+    it "chek_move a Pawn from e2 to f4, incorrect crossed movement" do
+      expect(P.new.check_move([1,4],[2,5], @board)).to eq ("ILEGAL")
     end
   end
 
